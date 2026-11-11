@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;MODE=PostgreSQL;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+jwt:
+  # TEST ONLY. Throwaway key, never user outside tests.
+  secret: fBOLUyAYLbgcb9BieewdwrEmwKoeQoIT8X32Ei0IfEI=
+  expiration-ms: 5000

@@ -1,0 +1,23 @@
+services:
+  db:
+    container_name: postgres-spring-boot
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: jemshit
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: bookdatabase
+      PGDATA: /data/postgres
+    volumes:
+      - db:/data/postgres
+    ports:
+      - "5332:5432"
+    networks:
+      - db
+    restart: unless-stopped
+
+networks:
+  dp:
+    driver: bridge
+
+volumes:
+  dp:
