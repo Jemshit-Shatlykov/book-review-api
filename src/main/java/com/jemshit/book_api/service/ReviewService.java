@@ -62,7 +62,8 @@ public class ReviewService {
                         .orElseThrow(() -> new ReviewNotFoundException("Review with id: " + id + " not found"));
 
         boolean isOwner = review.getUser().getUsername().equals(auth.getName());
-        boolean isAdmin = review.getUser().getRole().toString().equals("ROLE_ADMIN");
+        boolean isAdmin = auth.getAuthorities().stream()
+                .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
 
         if(!isOwner && !isAdmin){
             throw new AccessDeniedException("You can only delete your own reviews");

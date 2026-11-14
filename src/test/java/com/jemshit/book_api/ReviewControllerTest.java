@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -37,6 +38,9 @@ public class ReviewControllerTest {
 
     @BeforeEach
     void setUp(){
+        reviewRepository.deleteAll();
+        bookRepository.deleteAll();
+        userRepository.deleteAll();
 
         Book book1 = new Book("978-0735211292", "Atomic Habits", "James Clear");
         Book book2 = new Book("978-0132350884", "Clean Code", "Robert C. Martin");
@@ -78,5 +82,14 @@ public class ReviewControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(4)))
                 .andExpect(jsonPath("$[*].user.password").doesNotExist());
+    }
+
+    @Test
+    void deleting_otherReviews_returnsForbidden() throws Exception{
+        String token = jwtService.generateToken("testuser");
+
+        mockMvc.perform(delete("/reviews/2")
+                .header("Authorization", "Bearer " + token))
+                .andExpect(status().isForbidden());
     }
 }

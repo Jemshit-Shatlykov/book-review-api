@@ -21,7 +21,7 @@ public class JWTServiceTest {
         jwtService = new JWTService();
         String testKey = Encoders.BASE64.encode(Jwts.SIG.HS256.key().build().getEncoded());
         ReflectionTestUtils.setField(jwtService, "secretKey", testKey);
-        ReflectionTestUtils.setField(jwtService, "expirationMs", -3600000L);
+        ReflectionTestUtils.setField(jwtService, "expirationMs", 5000L);
     }
 
     @Test
@@ -46,8 +46,10 @@ public class JWTServiceTest {
     }
 
     @Test
-    void expiredToken_isRejected(){
+    void expiredToken_isRejected() throws InterruptedException{
         String token = jwtService.generateToken("Enesh");
+
+        Thread.sleep(6000);
 
         assertThrows(ExpiredJwtException.class, () -> jwtService.extractUserName(token));
     }

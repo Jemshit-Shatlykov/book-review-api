@@ -36,7 +36,7 @@ public class BookControllerTest {
     @BeforeEach
     void setUp(){
         bookRepository.deleteAll();
-        bookRepository.deleteAll();
+        userRepository.deleteAll();
 
         bookRepository.save(new Book("978-0735211292", "Atomic Habits", "James Clear"));
         bookRepository.save(new Book("978-0132350884", "Clean Code", "Robert C. Martin"));

@@ -1,6 +1,7 @@
 package com.jemshit.book_api.security;
 
 import com.jemshit.book_api.JwtFilter;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
