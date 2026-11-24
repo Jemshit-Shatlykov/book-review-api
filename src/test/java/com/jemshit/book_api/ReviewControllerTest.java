@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-@ActiveProfiles("Test")
+@ActiveProfiles("test")
 @AutoConfigureMockMvc
 public class ReviewControllerTest {
 
@@ -85,11 +85,16 @@ public class ReviewControllerTest {
     }
 
     @Test
-    void deleting_otherReviews_returnsForbidden() throws Exception{
+    void deleting_otherReviews_returnsForbidden() throws Exception {
         String token = jwtService.generateToken("testuser");
 
-        mockMvc.perform(delete("/reviews/2")
-                .header("Authorization", "Bearer " + token))
+        Review reviewOwnedByTestuser2 = reviewRepository.findAll().stream()
+                .filter(review -> review.getUser().getUsername().equals("testuser2"))
+                .findFirst()
+                .orElseThrow();
+
+        mockMvc.perform(delete("/reviews/{id}", reviewOwnedByTestuser2.getId())
+                        .header("Authorization", "Bearer " + token))
                 .andExpect(status().isForbidden());
     }
 }

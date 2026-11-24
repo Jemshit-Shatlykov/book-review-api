@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @SpringBootTest
-@ActiveProfiles("Test")
+@ActiveProfiles("test")
 @AutoConfigureMockMvc
 public class BookControllerTest {
 
