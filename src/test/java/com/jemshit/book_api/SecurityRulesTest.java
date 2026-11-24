@@ -1,6 +1,7 @@
 package com.jemshit.book_api;
 
 import com.jemshit.book_api.model.User;
+import com.jemshit.book_api.repository.ReviewRepository;
 import com.jemshit.book_api.repository.UserRepository;
 import com.jemshit.book_api.service.JWTService;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,12 +23,14 @@ public class SecurityRulesTest {
 
     @Autowired private MockMvc mockMvc;
     @Autowired private UserRepository userRepository;
+    @Autowired private ReviewRepository reviewRepository;
     @Autowired private PasswordEncoder passwordEncoder;
     @Autowired private JWTService jwtService;
 
 
     @BeforeEach
     void setUp(){
+        reviewRepository.deleteAll();
         userRepository.deleteAll();
 
         userRepository.save(new User("testuser",

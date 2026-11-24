@@ -3,6 +3,7 @@ package com.jemshit.book_api;
 import com.jemshit.book_api.model.Book;
 import com.jemshit.book_api.model.User;
 import com.jemshit.book_api.repository.BookRepository;
+import com.jemshit.book_api.repository.ReviewRepository;
 import com.jemshit.book_api.repository.UserRepository;
 import com.jemshit.book_api.service.JWTService;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,6 +29,7 @@ public class BookControllerTest {
 
     @Autowired private MockMvc mockMvc;
     @Autowired private BookRepository bookRepository;
+    @Autowired private ReviewRepository reviewRepository;
     @Autowired private JWTService jwtService;
     @Autowired private UserRepository userRepository;
     @Autowired private PasswordEncoder passwordEncoder;
@@ -35,6 +37,7 @@ public class BookControllerTest {
 
     @BeforeEach
     void setUp(){
+        reviewRepository.deleteAll();
         bookRepository.deleteAll();
         userRepository.deleteAll();
 
